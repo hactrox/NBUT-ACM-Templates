@@ -25,3 +25,39 @@ void factorial(int n) // 函数直接输出结果
 	printf("\n");
 }
 
+//********** 大数取余 **********//
+int MOD(char *a, int mod)
+{
+	int len = strlen(a), re = 0;
+
+	for (int i = 0; i < len; i++)
+	{
+		re = re * 10 + a[i] - '0';
+		re = re % mod;
+	}
+	return re;
+}
+
+//********** 大数除法(char除int, 返回int) **********//
+int division(char *src, int n)
+{
+	int len = strlen(src), i, k, t=0, s=0;
+	char dest[1000];
+	bool flag = true;    //商是否有了第一个有效位，防止商首部一直出现0    
+	for (i = 0, k = 0; i < len; i++)
+	{
+		t = s * 10 + (src[i] - 48);    //新余数
+		if (t/n > 0 || t == 0)        //余数为0要修改商
+		{
+			dest[k++] = t/n + 48, s = t%n, flag = false;
+		}
+		else                    //不够除，修改余数
+		{
+			s = t;
+			if(!flag)            //商已经有有效位了，补零
+				dest[k++] = '0';
+		}
+	}
+	dest[k] = '\0';
+	return atoi(dest);
+}
